@@ -1,24 +1,7 @@
-<mat-grid-list cols="2" rowHeight="2:1">
-  <mat-grid-tile *ngFor="let food of foods; trackBy: trackFood">
-    <mat-card>
-      <mat-card-header>
-        <mat-card-title>{{ food.name }}</mat-card-title>
-        <mat-card-subtitle>{{ food.price }} €</mat-card-subtitle>
-        @if(food.reduce) {
-        <mat-card-subtitle class="text-green">
-          Réduction de {{ food.reduce }}€ profitez en !</mat-card-subtitle
-        >
-        }
-      </mat-card-header>
-      <mat-card-actions align="end">
-        <button (click)="addToCart(food)" mat-button>Ajouter au panier</button>
-      </mat-card-actions>
-    </mat-card>
-  </mat-grid-tile>
-
-  <mat-grid-tile [formGroup]="foodFormGroup" [colspan]="2" [rowspan]="2">
+<mat-grid-list cols="1" rowHeight="4:1" [formGroup]="foodFormGroup">
+  <mat-grid-tile>
     <div class="flex-div">
-      <span>Ajouter un produit non existant dans la liste</span>
+      <h3>Ajouter un produit non existant dans la liste</h3>
       <mat-form-field>
         <mat-label>Nom du produit</mat-label>
         <input
@@ -46,7 +29,6 @@
         <mat-error>Le champ ne peut être vide</mat-error>
         }
       </mat-form-field>
-
       <mat-form-field class="pb-40">
         <mat-label>Réduction (en €)</mat-label>
         <input
@@ -56,8 +38,26 @@
           formControlName="reduce"
         />
       </mat-form-field>
-
-      <button mat-flat-button (click)="save()">Enregistrer</button>
+      <button mat-flat-button (click)="save()">
+        <mat-icon>done_all</mat-icon>
+        Enregistrer
+      </button>
     </div>
+  </mat-grid-tile>
+
+  <mat-grid-tile>
+    @for(food of (foods$ | async); track $index) {
+    <mat-card class="food-card">
+      <mat-card-header>
+        <mat-card-title>{{ food.name }}</mat-card-title>
+        <mat-card-subtitle>{{ food.price }} €</mat-card-subtitle>
+        @if(food.reduce) {
+        <mat-card-subtitle class="text-green">
+          Réduction de {{ food.reduce }}€ profitez en !</mat-card-subtitle
+        >
+        }
+      </mat-card-header>
+    </mat-card>
+    }
   </mat-grid-tile>
 </mat-grid-list>

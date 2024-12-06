@@ -1,0 +1,23 @@
+<mat-grid-list cols="4" rowHeight="2:1">
+  @for(food of (foods$ | async); track $index) {
+  <mat-grid-tile>
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>{{ food.name }}</mat-card-title>
+        <mat-card-subtitle>{{ food.price }} €</mat-card-subtitle>
+        @if(food.reduce) {
+        <mat-card-subtitle class="text-green">
+          Réduction de {{ food.reduce }}€ profitez en !</mat-card-subtitle
+        >
+        }
+      </mat-card-header>
+      <mat-card-actions align="end">
+        <button (click)="addToCart(food)" mat-button>
+          <mat-icon>add_shopping_cart</mat-icon>
+          Ajouter au panier
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </mat-grid-tile>
+  }
+</mat-grid-list>

@@ -1,9 +1,9 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { selectCartList } from '../store/cart.selectors';
-import { getCartList } from '../store/cart.actions';
-import { Food } from '../models/food.model';
+import { selectCartList } from '../../store/cart/cart.selectors';
+import { getCartList } from '../../store/cart/cart.actions';
+import { Food } from '../../models/food.model';
 
 @Component({
   selector: 'app-cart',
@@ -19,7 +19,5 @@ export class CartComponent implements OnInit {
     this._store.dispatch(getCartList());
   }
 
-  trackCart(index: number, food: Food): number {
-    return index;
-  }
+  public removeToCart(food: Food): void {}
 }

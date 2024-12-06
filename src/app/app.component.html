@@ -1,7 +1,9 @@
 <p>
   <mat-toolbar color="primary">
     <mat-toolbar-row>
-      <span>Une simple application avec NgRx</span>
+      <span>
+        Bienvenue chez Amozan, vendeur de fruits et légumes Bio depuis 1897
+      </span>
       <span class="example-spacer"></span>
       <button
         routerLink="/shop"
@@ -19,7 +21,23 @@
         #tooltip="matTooltip"
         matTooltip="Panier"
       >
-        <mat-icon>shopping_cart</mat-icon>
+        <div
+          [matBadge]="cartLength$ | async"
+          matBadgeOverlap="false"
+          class="badge-button"
+        >
+          <mat-icon>shopping_cart</mat-icon>
+        </div>
+      </button>
+      <mat-divider vertical class="vertical-divider"></mat-divider>
+      <button
+        routerLink="/admin"
+        mat-icon-button
+        class="example-icon favorite-icon"
+        #tooltip="matTooltip"
+        matTooltip="Gestion des produits disponibles"
+      >
+        <mat-icon>assignment</mat-icon>
       </button>
     </mat-toolbar-row>
   </mat-toolbar>

@@ -1,68 +1,50 @@
 import { Component, DestroyRef, inject, OnInit } from '@angular/core';
-import { FoodService } from '../services/food.service';
-import { Store } from '@ngrx/store';
-import { addToCart } from '../store/cart.actions';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { tap } from 'rxjs';
-import { ERROR_NAME } from '../enums/errors.enum';
-import { Food } from '../models/food.model';
-
-export interface FoodFormGroup {
-  name: FormControl<string | null>;
-  price: FormControl<number | null>;
-  reduce: FormControl<number | null>;
-}
+import { Observable, tap } from 'rxjs';
+import { ERROR_NAME } from '../../enums/errors.enum';
+import { Store } from '@ngrx/store';
+import { FoodService } from '../../services/food.service';
+import { Food, FoodFormGroup } from '../../models/food.model';
+import { addFood, getFoodList } from '../../store/food/food.actions';
+import { selectFoodList } from '../../store/food/food.selectors';
 
 @Component({
-  selector: 'app-shop',
-  templateUrl: './shop.component.html',
-  styleUrls: ['./shop.component.scss'],
+  selector: 'app-admin',
+  templateUrl: './admin.component.html',
+  styleUrl: './admin.component.scss',
 })
-export class ShopComponent implements OnInit {
-  foods: Food[] = [];
-  foodFormGroup!: FormGroup<FoodFormGroup>;
-  showCurrentlyExistNameError!: boolean;
-  showMaxAuthorizedReduceError!: boolean;
-  showRequiredNameError!: boolean;
-  showRequiredPriceError!: boolean;
+export class AdminComponent implements OnInit {
+  public foodFormGroup!: FormGroup<FoodFormGroup>;
+  public showCurrentlyExistNameError!: boolean;
+  public showMaxAuthorizedReduceError!: boolean;
+  public showRequiredNameError!: boolean;
+  public showRequiredPriceError!: boolean;
+  public foods$: Observable<Food[]>;
 
-  private _foodService = inject(FoodService);
-  private _store = inject(Store);
   private _matSnackBar = inject(MatSnackBar);
-
+  private _store = inject(Store);
   private readonly _destroyRef = inject(DestroyRef);
 
   ngOnInit(): void {
+    this.foods$ = this._store.select(selectFoodList);
+    this._store.dispatch(getFoodList());
     this.initForm();
     this.initWatchers();
-    this._foodService
-      .getApiFood()
-      .pipe(takeUntilDestroyed(this._destroyRef))
-      .subscribe((result: Food[]) => {
-        this.foods = result;
-      });
   }
 
-  addToCart(newFood: Food): void {
-    this._store.dispatch(addToCart({ newFood }));
-  }
-
-  trackFood(index: number, food: Food): number {
-    return index;
-  }
-
-  save(): void {
+  public save(): void {
     if (this.foodFormGroup.valid) {
-      this._foodService
-        .postApiFood({
-          name: this.foodFormGroup.controls.name.value ?? '',
-          reduce: this.foodFormGroup.controls.reduce.value ?? 0,
-          price: this.foodFormGroup.controls.price.value ?? 0,
+      this._store.dispatch(
+        addFood({
+          food: {
+            name: this.foodFormGroup.controls.name.value,
+            reduce: this.foodFormGroup.controls.reduce.value,
+            price: this.foodFormGroup.controls.price.value,
+          },
         })
-        .pipe(takeUntilDestroyed(this._destroyRef))
-        .subscribe();
+      );
     } else {
       this.foodFormGroup.markAllAsTouched();
       this.showRequiredNameError = this.findErrorByControl(
@@ -124,18 +106,6 @@ export class ShopComponent implements OnInit {
           this.showRequiredPriceError = this.findErrorByControl(
             'price',
             ERROR_NAME.REQUIRED
-          );
-        }),
-        takeUntilDestroyed(this._destroyRef)
-      )
-      .subscribe();
-
-    this.foodFormGroup.controls.reduce.statusChanges
-      .pipe(
-        tap(() => {
-          this.showMaxAuthorizedReduceError = this.findErrorByControl(
-            'reduce',
-            ERROR_NAME.MAX_PERCENTAGE_REDUCE
           );
         }),
         takeUntilDestroyed(this._destroyRef)

@@ -1,17 +1,17 @@
 import { createReducer, on } from '@ngrx/store';
 import { addToCart, getCartList, getCartListSuccess } from './cart.actions';
-import { Food } from '../models/food.model';
+import { Food } from '../../models/food.model';
 
-export interface GlobalState {
+export interface CartState {
   cartList: Food[];
 }
 
-const globalInitialState: GlobalState = {
+const cartInitialState: CartState = {
   cartList: [],
 };
 
 export const cartReducer = createReducer(
-  globalInitialState,
+  cartInitialState,
   on(getCartList, (state) => ({
     ...state,
   })),
