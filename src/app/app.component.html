@@ -3,10 +3,22 @@
     <mat-toolbar-row>
       <span>Une simple application avec NgRx</span>
       <span class="example-spacer"></span>
-      <button routerLink="/shop" mat-icon-button class="example-icon favorite-icon">
+      <button
+        routerLink="/shop"
+        mat-icon-button
+        class="example-icon favorite-icon"
+        #tooltip="matTooltip"
+        matTooltip="Liste des produits"
+      >
         <mat-icon>store</mat-icon>
       </button>
-      <button routerLink="/basket" mat-icon-button class="example-icon">
+      <button
+        routerLink="/cart"
+        mat-icon-button
+        class="example-icon"
+        #tooltip="matTooltip"
+        matTooltip="Panier"
+      >
         <mat-icon>shopping_cart</mat-icon>
       </button>
     </mat-toolbar-row>

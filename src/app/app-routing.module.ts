@@ -1,25 +1,26 @@
 import { ShopComponent } from './shop/shop.component';
-import { BasketComponent } from './basket/basket.component';
+import { CartComponent } from './cart/cart.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
   {
-    path: 'basket',
-    component: BasketComponent
-  },{
+    path: 'cart',
+    component: CartComponent,
+  },
+  {
     path: 'shop',
-    component: ShopComponent
+    component: ShopComponent,
   },
   {
     path: '',
     pathMatch: 'full',
-    redirectTo: 'shop'
-  }
+    redirectTo: 'shop',
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}
