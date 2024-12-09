@@ -12,3 +12,8 @@ export const selectFoodError = createSelector(
   selectFoodState,
   (state: FoodState) => state.error
 );
+
+export const selectLoadingFood = createSelector(
+  selectFoodState,
+  (state: FoodState) => state.loading
+);

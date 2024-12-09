@@ -11,6 +11,7 @@ import { addFood, getFoodList } from '../../store/food/food.actions';
 import {
   selectFoodError,
   selectFoodList,
+  selectLoadingFood,
 } from '../../store/food/food.selectors';
 
 @Component({
@@ -25,15 +26,17 @@ export class AdminComponent implements OnInit {
   public showRequiredNameError!: boolean;
   public showRequiredPriceError!: boolean;
   public foods$: Observable<Food[]>;
-  private foodError$: Observable<Error>;
+  public loadingFood$: Observable<boolean>;
 
+  private _foodError$: Observable<Error>;
   private _matSnackBar = inject(MatSnackBar);
   private _store = inject(Store);
   private readonly _destroyRef = inject(DestroyRef);
 
   ngOnInit(): void {
     this.foods$ = this._store.select(selectFoodList);
-    this.foodError$ = this._store.select(selectFoodError);
+    this._foodError$ = this._store.select(selectFoodError);
+    this.loadingFood$ = this._store.select(selectLoadingFood);
 
     this._store.dispatch(getFoodList());
     this.initForm();
@@ -128,7 +131,7 @@ export class AdminComponent implements OnInit {
   }
 
   private manageErrors(): void {
-    this.foodError$
+    this._foodError$
       .pipe(
         filter((error) => !!error),
         tap((error) => {

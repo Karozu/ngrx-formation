@@ -1,3 +1,8 @@
+@if(loadingFood$ |async) {
+<div class="spinner">
+  <mat-spinner></mat-spinner>
+</div>
+} @else {
 <mat-grid-list cols="1" rowHeight="4:1" [formGroup]="foodFormGroup">
   <mat-grid-tile>
     <div class="flex-div">
@@ -64,3 +69,4 @@
     </div>
   </mat-grid-tile>
 </mat-grid-list>
+}

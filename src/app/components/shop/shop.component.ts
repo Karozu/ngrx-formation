@@ -4,7 +4,10 @@ import { addToCart } from '../../store/cart/cart.actions';
 import { Observable } from 'rxjs';
 import { Food } from '../../models/food.model';
 import { getFoodList } from '../../store/food/food.actions';
-import { selectFoodList } from '../../store/food/food.selectors';
+import {
+  selectFoodList,
+  selectLoadingFood,
+} from '../../store/food/food.selectors';
 
 @Component({
   selector: 'app-shop',
@@ -13,11 +16,13 @@ import { selectFoodList } from '../../store/food/food.selectors';
 })
 export class ShopComponent implements OnInit {
   public foods$: Observable<Food[]>;
-
+  public loadingFood$: Observable<boolean>;
   private _store = inject(Store);
 
   ngOnInit(): void {
     this.foods$ = this._store.select(selectFoodList);
+    this.loadingFood$ = this._store.select(selectLoadingFood);
+
     this._store.dispatch(getFoodList());
   }
 

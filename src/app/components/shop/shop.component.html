@@ -1,3 +1,8 @@
+@if(loadingFood$ |async) {
+<div class="spinner">
+  <mat-spinner></mat-spinner>
+</div>
+} @else {
 <mat-grid-list cols="4" rowHeight="2:1">
   @for(food of (foods$ | async); track $index) {
   <mat-grid-tile>
@@ -21,3 +26,4 @@
   </mat-grid-tile>
   }
 </mat-grid-list>
+}
