@@ -1,0 +1,26 @@
+.flex-div {
+  display: flex;
+  flex-direction: column;
+}
+
+.food-card {
+  margin: 6px;
+  height: 100px;
+  width: 240px;
+}
+
+.text-green {
+  color: green;
+}
+
+.flex-card-div {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.spinner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

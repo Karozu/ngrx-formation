@@ -1,0 +1,30 @@
+<h2>Liste des produits dans mon panier</h2>
+@if(loadingCart$ |async) {
+<div class="spinner">
+  <mat-spinner></mat-spinner>
+</div>
+} @else {
+<mat-grid-list cols="4" rowHeight="2:1">
+  @for(food of (cartList$ | async); track $index) {
+  <mat-grid-tile>
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>{{ food.name }}</mat-card-title>
+        <mat-card-subtitle>{{ food.price }} €</mat-card-subtitle>
+        @if(food.reduce) {
+        <mat-card-subtitle class="text-green">
+          Réduction de {{ food.reduce }}€ profitez en !</mat-card-subtitle
+        >
+        }
+      </mat-card-header>
+      <mat-card-actions align="end">
+        <button (click)="removeToCart(food)" mat-button>
+          <mat-icon>remove_shopping_cart</mat-icon>
+          Retirer au panier
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </mat-grid-tile>
+  }
+</mat-grid-list>
+}

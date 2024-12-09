@@ -1,0 +1,72 @@
+@if(loadingFood$ |async) {
+<div class="spinner">
+  <mat-spinner></mat-spinner>
+</div>
+} @else {
+<mat-grid-list cols="1" rowHeight="4:1" [formGroup]="foodFormGroup">
+  <mat-grid-tile>
+    <div class="flex-div">
+      <h3>Ajouter un produit non existant dans la liste</h3>
+      <mat-form-field>
+        <mat-label>Nom du produit</mat-label>
+        <input
+          matInput
+          type="text"
+          placeholder="Ex. Poire"
+          formControlName="name"
+        />
+        @if(showRequiredNameError) {
+        <mat-error>Le champ ne peut être vide</mat-error>
+        } @if(showCurrentlyExistNameError) {
+        <mat-error>Erreur nom du produit déjà existant</mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Prix (en €)</mat-label>
+        <input
+          matInput
+          type="number"
+          placeholder="Ex. 3.5"
+          formControlName="price"
+        />
+        @if(showRequiredPriceError) {
+        <mat-error>Le champ ne peut être vide</mat-error>
+        }
+      </mat-form-field>
+      <mat-form-field class="pb-40">
+        <mat-label>Réduction (en €)</mat-label>
+        <input
+          matInput
+          type="number"
+          placeholder="Ex. 0.3"
+          formControlName="reduce"
+        />
+      </mat-form-field>
+      <button mat-flat-button (click)="save()">
+        <mat-icon>done_all</mat-icon>
+        Enregistrer
+      </button>
+    </div>
+  </mat-grid-tile>
+
+  <mat-grid-tile>
+    <div class="flex-card-div">
+      @for(food of (foods$ | async); track $index) {
+      <mat-card class="food-card">
+        <mat-card-header>
+          <mat-card-title>{{ food.name }}</mat-card-title>
+          <mat-card-subtitle>{{ food.price }} €</mat-card-subtitle>
+          @if(food.reduce) {
+          <mat-card-subtitle class="text-green">
+            Réduction de {{ food.reduce }}€ profitez en !</mat-card-subtitle
+          >
+          }
+        </mat-card-header>
+      </mat-card>
+
+      }
+    </div>
+  </mat-grid-tile>
+</mat-grid-list>
+}
