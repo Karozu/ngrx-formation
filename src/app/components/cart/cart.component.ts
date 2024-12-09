@@ -2,7 +2,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { selectCartList } from '../../store/cart/cart.selectors';
-import { getCartList } from '../../store/cart/cart.actions';
+import { getCartList, removeToCart } from '../../store/cart/cart.actions';
 import { Food } from '../../models/food.model';
 
 @Component({
@@ -19,5 +19,7 @@ export class CartComponent implements OnInit {
     this._store.dispatch(getCartList());
   }
 
-  public removeToCart(food: Food): void {}
+  public removeToCart(food: Food): void {
+    this._store.dispatch(removeToCart({ food }));
+  }
 }

@@ -1,4 +1,4 @@
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, of, tap, throwError } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { Food } from '../models/food.model';
 
@@ -44,6 +44,16 @@ export class FoodService {
   }
 
   public postApiFood(newFood: Food): Observable<Food[]> {
+    if (this._foods.value.length >= 6) {
+      return this._foods$.pipe(
+        tap(() => {
+          throw new Error(
+            `Impossible d'ajouter "${newFood.name}" parce que j'ai plus envie`
+          );
+        })
+      );
+    }
+
     const newId =
       this._foods.value[this._foods.value.length - 1].id ??
       this.getRandomNumber() + 1;

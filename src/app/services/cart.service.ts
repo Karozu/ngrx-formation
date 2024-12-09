@@ -22,7 +22,7 @@ export class CartService {
   }
 
   postApiCart(newFoodInCart: Food): Observable<Food[]> {
-    const newId = this._cart.value[this._cart.value.length - 1].id ?? 0 + 1;
+    const newId = this._cart.value[this._cart.value.length - 1]?.id ?? 0 + 1;
     this._cart.next([...this._cart.value, { ...newFoodInCart, id: newId }]);
     return this._cart$;
   }

@@ -46,18 +46,21 @@
   </mat-grid-tile>
 
   <mat-grid-tile>
-    @for(food of (foods$ | async); track $index) {
-    <mat-card class="food-card">
-      <mat-card-header>
-        <mat-card-title>{{ food.name }}</mat-card-title>
-        <mat-card-subtitle>{{ food.price }} €</mat-card-subtitle>
-        @if(food.reduce) {
-        <mat-card-subtitle class="text-green">
-          Réduction de {{ food.reduce }}€ profitez en !</mat-card-subtitle
-        >
-        }
-      </mat-card-header>
-    </mat-card>
-    }
+    <div class="flex-card-div">
+      @for(food of (foods$ | async); track $index) {
+      <mat-card class="food-card">
+        <mat-card-header>
+          <mat-card-title>{{ food.name }}</mat-card-title>
+          <mat-card-subtitle>{{ food.price }} €</mat-card-subtitle>
+          @if(food.reduce) {
+          <mat-card-subtitle class="text-green">
+            Réduction de {{ food.reduce }}€ profitez en !</mat-card-subtitle
+          >
+          }
+        </mat-card-header>
+      </mat-card>
+
+      }
+    </div>
   </mat-grid-tile>
 </mat-grid-list>

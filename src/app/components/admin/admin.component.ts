@@ -2,13 +2,16 @@ import { Component, DestroyRef, inject, OnInit } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Observable, tap } from 'rxjs';
+import { filter, Observable, tap } from 'rxjs';
 import { ERROR_NAME } from '../../enums/errors.enum';
 import { Store } from '@ngrx/store';
 import { FoodService } from '../../services/food.service';
 import { Food, FoodFormGroup } from '../../models/food.model';
 import { addFood, getFoodList } from '../../store/food/food.actions';
-import { selectFoodList } from '../../store/food/food.selectors';
+import {
+  selectFoodError,
+  selectFoodList,
+} from '../../store/food/food.selectors';
 
 @Component({
   selector: 'app-admin',
@@ -22,6 +25,7 @@ export class AdminComponent implements OnInit {
   public showRequiredNameError!: boolean;
   public showRequiredPriceError!: boolean;
   public foods$: Observable<Food[]>;
+  private foodError$: Observable<Error>;
 
   private _matSnackBar = inject(MatSnackBar);
   private _store = inject(Store);
@@ -29,9 +33,12 @@ export class AdminComponent implements OnInit {
 
   ngOnInit(): void {
     this.foods$ = this._store.select(selectFoodList);
+    this.foodError$ = this._store.select(selectFoodError);
+
     this._store.dispatch(getFoodList());
     this.initForm();
     this.initWatchers();
+    this.manageErrors();
   }
 
   public save(): void {
@@ -118,5 +125,20 @@ export class AdminComponent implements OnInit {
     errorName: ERROR_NAME
   ): boolean {
     return this.foodFormGroup.get(controlName)?.hasError(errorName) ?? false;
+  }
+
+  private manageErrors(): void {
+    this.foodError$
+      .pipe(
+        filter((error) => !!error),
+        tap((error) => {
+          console.log(error);
+          this._matSnackBar.open(error.message, 'fermer', {
+            duration: 2000,
+          });
+        }),
+        takeUntilDestroyed(this._destroyRef)
+      )
+      .subscribe();
   }
 }

@@ -8,6 +8,11 @@ export const getFoodListSuccess = createAction(
   props<{ foodList: Food[] }>()
 );
 
+export const getFoodListFailure = createAction(
+  '[Food] get foodList Failure',
+  props<{ error: Error }>()
+);
+
 export const addFood = createAction(
   '[Food] post food',
   props<{ food: Food }>()
@@ -16,4 +21,9 @@ export const addFood = createAction(
 export const addFoodSuccess = createAction(
   '[Food] post food Success',
   props<{ foodList: Food[] }>()
+);
+
+export const addFoodFailure = createAction(
+  '[Food] post food Failure',
+  props<{ error: Error }>()
 );

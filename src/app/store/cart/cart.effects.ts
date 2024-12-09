@@ -32,7 +32,7 @@ export const removeToCart$ = createEffect(
   (actions$ = inject(Actions), cartService = inject(CartService)) => {
     return actions$.pipe(
       ofType(cartActions.removeToCart),
-      switchMap(({ food }) => cartService.postApiCart(food)),
+      switchMap(({ food }) => cartService.deleteApiCart(food)),
       map(() => cartActions.removeToCartSuccess())
     );
   },
