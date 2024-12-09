@@ -16,9 +16,6 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatListModule } from '@angular/material/list';
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import { cartReducer } from './store/cart/cart.reducer';
-import * as CartEffects from './store/cart/cart.effects';
-import * as FoodEffects from './store/food/food.effects';
 import { EffectsModule } from '@ngrx/effects';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
@@ -26,7 +23,6 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatBadgeModule } from '@angular/material/badge';
 import { AdminComponent } from './components/admin/admin.component';
 import { MatDividerModule } from '@angular/material/divider';
-import { foodReducer } from './store/food/food.reducer';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @NgModule({
@@ -45,9 +41,9 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     MatTooltipModule,
     MatSnackBarModule,
     MatDialogModule,
-    StoreModule.forRoot({ cart: cartReducer, food: foodReducer }),
+    StoreModule.forRoot({}),
     StoreDevtoolsModule.instrument({ logOnly: false }),
-    EffectsModule.forRoot([CartEffects, FoodEffects]),
+    EffectsModule.forRoot([]),
     FormsModule,
     MatInputModule,
     MatFormFieldModule,

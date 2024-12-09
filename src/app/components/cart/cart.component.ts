@@ -1,11 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import {
-  selectCartList,
-  selectLoadingCart,
-} from '../../store/cart/cart.selectors';
-import { getCartList, removeToCart } from '../../store/cart/cart.actions';
 import { Food } from '../../models/food.model';
 
 @Component({
@@ -18,14 +13,12 @@ export class CartComponent implements OnInit {
   public cartList$: Observable<Food[]>;
 
   private _store = inject(Store);
-  ngOnInit(): void {
-    this.cartList$ = this._store.select(selectCartList);
-    this.loadingCart$ = this._store.select(selectLoadingCart);
 
-    this._store.dispatch(getCartList());
+  ngOnInit(): void {
+    // TODO: Mettre en place le branchement des observables avec les données du store associé
   }
 
   public removeToCart(foodToRemove: Food): void {
-    this._store.dispatch(removeToCart({ foodToRemove }));
+    // TODO: Mettre en place la suppression de mon produit dans le store
   }
 }

@@ -2,17 +2,10 @@ import { Component, DestroyRef, inject, OnInit } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { filter, Observable, tap } from 'rxjs';
+import { filter, Observable, of, tap } from 'rxjs';
 import { ERROR_NAME } from '../../enums/errors.enum';
 import { Store } from '@ngrx/store';
-import { FoodService } from '../../services/food.service';
 import { Food, FoodFormGroup } from '../../models/food.model';
-import { addFood, getFoodList } from '../../store/food/food.actions';
-import {
-  selectFoodError,
-  selectFoodList,
-  selectLoadingFood,
-} from '../../store/food/food.selectors';
 
 @Component({
   selector: 'app-admin',
@@ -34,11 +27,9 @@ export class AdminComponent implements OnInit {
   private readonly _destroyRef = inject(DestroyRef);
 
   ngOnInit(): void {
-    this.foods$ = this._store.select(selectFoodList);
-    this._foodError$ = this._store.select(selectFoodError);
-    this.loadingFood$ = this._store.select(selectLoadingFood);
+    this._foodError$ = of(null); // TODO: A remplacer par la donnée dans le store
+    // TODO: Mettre en place le branchement des observables avec les données du store associé
 
-    this._store.dispatch(getFoodList());
     this.initForm();
     this.initWatchers();
     this.manageErrors();
@@ -46,15 +37,7 @@ export class AdminComponent implements OnInit {
 
   public save(): void {
     if (this.foodFormGroup.valid) {
-      this._store.dispatch(
-        addFood({
-          food: {
-            name: this.foodFormGroup.controls.name.value,
-            reduce: this.foodFormGroup.controls.reduce.value,
-            price: this.foodFormGroup.controls.price.value,
-          },
-        })
-      );
+      // TODO: Mettre en place l'ajout de mon produit avec la valeur dans mon form
     } else {
       this.foodFormGroup.markAllAsTouched();
       this.showRequiredNameError = this.findErrorByControl(
@@ -135,7 +118,6 @@ export class AdminComponent implements OnInit {
       .pipe(
         filter((error) => !!error),
         tap((error) => {
-          console.log(error);
           this._matSnackBar.open(error.message, 'fermer', {
             duration: 2000,
           });
