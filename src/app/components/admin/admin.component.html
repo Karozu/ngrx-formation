@@ -54,7 +54,7 @@
     <div class="flex-card-div">
       @for(food of (foods$ | async); track $index) {
       <mat-card class="food-card">
-        <mat-card-header>
+        <mat-card-content>
           <mat-card-title>{{ food.name }}</mat-card-title>
           <mat-card-subtitle>{{ food.price }} €</mat-card-subtitle>
           @if(food.reduce) {
@@ -62,7 +62,7 @@
             Réduction de {{ food.reduce }}€ profitez en !</mat-card-subtitle
           >
           }
-        </mat-card-header>
+        </mat-card-content>
       </mat-card>
 
       }

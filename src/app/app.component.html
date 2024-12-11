@@ -8,7 +8,6 @@
       <button
         routerLink="/shop"
         mat-icon-button
-        class="example-icon favorite-icon"
         #tooltip="matTooltip"
         matTooltip="Liste des produits"
       >
@@ -17,7 +16,6 @@
       <button
         routerLink="/cart"
         mat-icon-button
-        class="example-icon"
         #tooltip="matTooltip"
         matTooltip="Panier"
       >
@@ -33,11 +31,25 @@
       <button
         routerLink="/admin"
         mat-icon-button
-        class="example-icon favorite-icon"
         #tooltip="matTooltip"
         matTooltip="Gestion des produits disponibles"
       >
         <mat-icon>assignment</mat-icon>
+      </button>
+      <button
+        routerLink="/user"
+        mat-icon-button
+        class="prof"
+        #tooltip="matTooltip"
+        matTooltip="Profile"
+      >
+        <div
+          [matBadge]="userInitialName()"
+          matBadgeOverlap="false"
+          class="badge-button"
+        >
+          <mat-icon>person</mat-icon>
+        </div>
       </button>
     </mat-toolbar-row>
   </mat-toolbar>

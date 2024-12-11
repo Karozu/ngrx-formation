@@ -3,8 +3,9 @@ import { CartComponent } from './components/cart/cart.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AdminComponent } from './components/admin/admin.component';
+import { UserSignalComponent } from './components/user-signal/user-signal.component';
 
-const routes: Routes = [
+export const routes: Routes = [
   {
     path: 'cart',
     component: CartComponent,
@@ -16,6 +17,10 @@ const routes: Routes = [
   {
     path: 'admin',
     component: AdminComponent,
+  },
+  {
+    path: 'user',
+    component: UserSignalComponent,
   },
   {
     path: '',

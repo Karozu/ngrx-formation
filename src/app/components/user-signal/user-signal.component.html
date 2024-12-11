@@ -1,0 +1,84 @@
+<!--@if(signalStore.user.id() !== null) {
+<h1>Utilisateur</h1>
+<div>
+  <div>Prénom : {{ signalStore.user.firstName() }}</div>
+  <div>Nom : {{ signalStore.user.lastName() }}</div>
+  <div>Prénom / Nom : {{ signalStore.name() }}</div>
+</div>
+
+<h1>Adresse</h1>
+@if(signalStore.user.address(); as userAddress) {
+<div>
+  <div>Code Postal : {{ userAddress.zip }}</div>
+  <div>Ville : {{ userAddress.city }}</div>
+  <div>Pays : {{ userAddress.country }}</div>
+  <div>Rue : {{ userAddress.street }}</div>
+</div>
+} } @else {
+<p>Aucun utilisateur trouvé</p>
+<button (click)="loadUser()">Charger un utilisateur</button>
+} -->
+
+<mat-grid-list cols="1" rowHeight="4:1">
+  <mat-grid-tile>
+    @if(loadingUser() === true) {
+    <mat-card>
+      <mat-card-content>
+        <div class="spinner">
+          <mat-spinner></mat-spinner>
+        </div>
+      </mat-card-content>
+    </mat-card>
+    } @else { @if(signalStore.user.id() !== null) {
+    <mat-card>
+      <mat-card-content>
+        <div class="flex-div">
+          <mat-card-title>Utilisateur</mat-card-title>
+          <mat-card-subtitle>
+            Prénom : {{ signalStore.user.firstName() }}
+          </mat-card-subtitle>
+          <mat-card-subtitle>
+            Nom : {{ signalStore.user.lastName() }}
+          </mat-card-subtitle>
+          <mat-card-subtitle>
+            Prénom / Nom (Computed): {{ signalStore.name() }}
+          </mat-card-subtitle>
+          @if(signalStore.user.address(); as userAddress) {
+          <mat-card-subtitle>
+            Code Postal : {{ userAddress.zip }}
+          </mat-card-subtitle>
+          <mat-card-subtitle>
+            Ville : {{ userAddress.city }}
+          </mat-card-subtitle>
+          <mat-card-subtitle>
+            Pays : {{ userAddress.country }}
+          </mat-card-subtitle>
+          <mat-card-subtitle>
+            Rue : {{ userAddress.street }}
+          </mat-card-subtitle>
+          }
+        </div>
+      </mat-card-content>
+      <mat-card-actions align="end">
+        <button class="button" (click)="reset()" mat-button>
+          <mat-icon>loop</mat-icon>
+          Reset l'utilisateur
+        </button>
+      </mat-card-actions>
+    </mat-card>
+    } @else {
+    <mat-card>
+      <mat-card-content>
+        <div class="flex-div">
+          <mat-card-title>Aucun utilisateur trouvé</mat-card-title>
+        </div>
+      </mat-card-content>
+      <mat-card-actions align="end">
+        <button mat-button class="button" (click)="loadUser()">
+          <mat-icon>person</mat-icon> Charger un utilisateur
+        </button>
+      </mat-card-actions>
+    </mat-card>
+    } }
+  </mat-grid-tile>
+</mat-grid-list>

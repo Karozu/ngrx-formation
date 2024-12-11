@@ -28,7 +28,6 @@ import { AdminComponent } from './components/admin/admin.component';
 import { MatDividerModule } from '@angular/material/divider';
 import { foodReducer } from './store/food/food.reducer';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-
 @NgModule({
   declarations: [AppComponent, CartComponent, ShopComponent, AdminComponent],
   bootstrap: [AppComponent],

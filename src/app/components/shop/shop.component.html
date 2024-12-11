@@ -7,7 +7,7 @@
   @for(food of (foods$ | async); track $index) {
   <mat-grid-tile>
     <mat-card>
-      <mat-card-header>
+      <mat-card-content>
         <mat-card-title>{{ food.name }}</mat-card-title>
         <mat-card-subtitle>{{ food.price }} €</mat-card-subtitle>
         @if(food.reduce) {
@@ -15,7 +15,7 @@
           Réduction de {{ food.reduce }}€ profitez en !</mat-card-subtitle
         >
         }
-      </mat-card-header>
+      </mat-card-content>
       <mat-card-actions align="end">
         <button (click)="addToCart(food)" mat-button>
           <mat-icon>add_shopping_cart</mat-icon>

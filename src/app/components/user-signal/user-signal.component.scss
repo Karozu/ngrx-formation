@@ -1,0 +1,26 @@
+.flex-card-div {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.spinner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.flex-div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  .button {
+    width: 40%;
+  }
+}
+
+mat-card {
+  width: 80%;
+}
