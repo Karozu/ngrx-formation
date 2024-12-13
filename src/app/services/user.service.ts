@@ -1,6 +1,7 @@
-import { BehaviorSubject, catchError, delay, map, Observable } from 'rxjs';
+import { BehaviorSubject, catchError, delay, map, Observable, of } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { User } from '../models/user.model';
+import { USER_ROLE } from '../enums/role.enum';
 
 @Injectable({
   providedIn: 'root',
@@ -33,5 +34,12 @@ export class UserService {
         );
       })
     );
+  }
+
+  public getApiUserRole(userId: number): Observable<USER_ROLE> {
+    if (userId) {
+      return of(USER_ROLE.USER);
+    }
+    return of(USER_ROLE.NOT_CONNECTED);
   }
 }

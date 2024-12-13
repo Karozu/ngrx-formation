@@ -1,24 +1,3 @@
-<!--@if(signalStore.user.id() !== null) {
-<h1>Utilisateur</h1>
-<div>
-  <div>Prénom : {{ signalStore.user.firstName() }}</div>
-  <div>Nom : {{ signalStore.user.lastName() }}</div>
-  <div>Prénom / Nom : {{ signalStore.name() }}</div>
-</div>
-
-<h1>Adresse</h1>
-@if(signalStore.user.address(); as userAddress) {
-<div>
-  <div>Code Postal : {{ userAddress.zip }}</div>
-  <div>Ville : {{ userAddress.city }}</div>
-  <div>Pays : {{ userAddress.country }}</div>
-  <div>Rue : {{ userAddress.street }}</div>
-</div>
-} } @else {
-<p>Aucun utilisateur trouvé</p>
-<button (click)="loadUser()">Charger un utilisateur</button>
-} -->
-
 <mat-grid-list cols="1" rowHeight="4:1">
   <mat-grid-tile>
     @if(loadingUser() === true) {

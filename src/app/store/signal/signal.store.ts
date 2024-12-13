@@ -13,6 +13,7 @@ import { User } from 'src/app/models/user.model';
 import { UserService } from 'src/app/services/user.service';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
 import { withLogging } from './logging.feature';
+import { withUserRoleMethod } from './user-role.feature';
 
 export interface SignalState {
   user: User;
@@ -57,11 +58,9 @@ export const SignalStore = signalStore(
         tap(() => patchState(store, { loading: true })),
         switchMap((userId: number) => {
           return userService.getApiUserDetails(userId).pipe(
-            tap((user) => console.log(user)),
             tap((user) => patchState(store, { loading: false, user })),
             catchError((error) => {
               patchState(store, { loading: false, error });
-              console.log(error);
               return error;
             })
           );
@@ -69,6 +68,7 @@ export const SignalStore = signalStore(
       )
     ),
   })),
+  withUserRoleMethod(),
   withHooks(({ name, changeName }) => {
     return {
       onInit() {
